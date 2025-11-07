@@ -1,0 +1,33 @@
+package com.example.net.net.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@Table(name = "service_product")
+public class ServiceProduct {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "service_product_id")
+    private Integer serviceProductId;
+
+    // Liên kết tới Service (nhiều sản phẩm có thể thuộc một dịch vụ)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_id", nullable = false)
+    @JsonBackReference
+    private Service service;
+
+    // Liên kết tới Product (một sản phẩm có thể dùng trong nhiều dịch vụ)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @Column(nullable = false)
+    private Integer quantity = 0;
+}
