@@ -15,7 +15,7 @@ import lombok.Setter;
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "log_id")
-        private int logId;
+        private Integer logId;
 
         @ManyToOne
         @JoinColumn(name = "session_id", nullable = false)

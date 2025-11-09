@@ -21,7 +21,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id", nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name = "username", length = 50, nullable = false, unique = true)
     private String username;
@@ -37,7 +37,7 @@ public class Customer {
     private Type type;
 
     @Column(name = "balance", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int balance;
+    private Integer balance;
 
 //    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 //    private List<Session> sessions;

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class InfoComputerDTO {
 
-    private int computerId;
+    private Integer computerId;
     private String screen;
     private String chip;
     private String gpu;

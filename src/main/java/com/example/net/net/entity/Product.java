@@ -30,10 +30,10 @@ public class Product {
     private Category category;
 
     @Column(name = "quantity", nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int quantity;
+    private Integer quantity;
 
     @Column(name = "price", nullable = false)
-    private int price;
+    private Integer price;
     // mappedBy với product của ServiceProduct 1 sản phẩm có thể có nhiểu Serviceproduct
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ServiceProduct> serviceProducts;

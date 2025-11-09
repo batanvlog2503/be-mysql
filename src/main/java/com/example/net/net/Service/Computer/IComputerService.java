@@ -8,6 +8,6 @@ public interface IComputerService {
 
     List<Computer> getAllComputers();
 
-    Computer getComputerById(int id);
+    Computer getComputerById(Integer id);
     void updateComputer(Computer computer);
 }

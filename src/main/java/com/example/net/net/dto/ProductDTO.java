@@ -10,6 +10,6 @@ public class ProductDTO {
     private Integer productId;
     private String productName;
     private Category category;
-    private int price;
-    private int quantity;
+    private Integer price;
+    private Integer quantity;
 }

@@ -8,14 +8,14 @@ import lombok.Setter;
 @Setter
 public class ComputerDTO {
 
-    private int computerId;
+    private Integer computerId;
     private String status;
 
     @Getter
     @Setter
     @NoArgsConstructor
     public static class InfocomputerDTO{
-        private int computerId;
+        private Integer computerId;
 
         private String screen;
         private String chip;

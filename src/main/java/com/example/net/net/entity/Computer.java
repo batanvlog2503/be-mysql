@@ -20,7 +20,7 @@ public class Computer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "computer_id", nullable = false)
-    private int computerId;
+    private Integer computerId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", columnDefinition = "ENUM('Offline', 'Using', 'Maintenance') DEFAULT 'Offline')")

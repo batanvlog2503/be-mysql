@@ -4,6 +4,8 @@ import com.example.net.net.Service.Service.IServiceService;
 import com.example.net.net.dto.ServiceDTO;
 import com.example.net.net.Response.ServiceResponseDTO;
 import com.example.net.net.entity.Service;
+import com.example.net.net.request.ServiceRequest;
+import com.example.net.net.request.UpdateServiceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,18 +24,12 @@ public class ServiceController {
 
     // GET: Lấy tất cả services
     @GetMapping
-    public ResponseEntity<List<ServiceResponseDTO>> getAllServices() {
+    public ResponseEntity<List<ServiceResponseDTO>> getAllServiceResponseDTO() {
         try {
-            List<Service> services = serviceService.getAllServices();
+            List<ServiceResponseDTO> response = serviceService.getAllServiceResponseDTO();
 
-            List<ServiceResponseDTO> response = services.stream()
-                    .sorted(Comparator.comparing(Service::getServiceId))
-                    .map(service -> new ServiceResponseDTO(
-                            service.getServiceId(),
-                            service.getCustomer() != null ? service.getCustomer().getId() : null,
-                            service.getSession() != null ? service.getSession().getSessionId(): null
-                    ))
-                    .collect(Collectors.toList());
+            // Nếu muốn sắp xếp theo serviceId tăng dần
+            response.sort(Comparator.comparing(ServiceResponseDTO::getServiceId));
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
@@ -44,16 +40,9 @@ public class ServiceController {
 
     // GET: Lấy service theo ID
     @GetMapping("/{id}")
-    public ResponseEntity<ServiceResponseDTO> getServiceById(@PathVariable int id) {
+    public ResponseEntity<ServiceResponseDTO> getServiceResponseById(@PathVariable Integer id) {
         try {
-            Service service = serviceService.getServiceById(id);
-
-            ServiceResponseDTO response = new ServiceResponseDTO(
-                    service.getServiceId(),
-                    service.getCustomer() != null ? service.getCustomer().getId() : null,
-                    service.getSession() != null ? service.getSession().getSessionId() : null
-            );
-
+            ServiceResponseDTO response = serviceService.getServiceResponseById(id);
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -68,16 +57,41 @@ public class ServiceController {
     public ResponseEntity<List<ServiceResponseDTO>> getServicesByCustomerId(
             @PathVariable Integer customerId) {
         try {
-            List<Service> services = serviceService.getServicesByCustomerId(customerId);
+//            List<Service> services = serviceService.getServicesByCustomerId(customerId);
+//
+//            List<ServiceResponseDTO> response = services.stream()
+//                    .map(service -> new ServiceResponseDTO(
+//                            service.getServiceId(),
+//                            service.getCustomer().getId(),
+//                            service.getSession() != null ? service.getSession().getSessionId() : null
+//                    ))
+//                    .collect(Collectors.toList());
+//
+//            return ResponseEntity.ok(response);
+            List<ServiceResponseDTO> response = serviceService.getServicesByCustomerId(customerId);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
-            List<ServiceResponseDTO> response = services.stream()
-                    .map(service -> new ServiceResponseDTO(
-                            service.getServiceId(),
-                            service.getCustomer().getId(),
-                            service.getSession() != null ? service.getSession().getSessionId() : null
-                    ))
-                    .collect(Collectors.toList());
-
+    @GetMapping("/session/{sessionId}")
+    public ResponseEntity<List<ServiceResponseDTO>> getSessionsBySessionId(
+            @PathVariable Integer sessionId) {
+        try {
+//            List<Service> services = serviceService.getServicesByCustomerId(customerId);
+//
+//            List<ServiceResponseDTO> response = services.stream()
+//                    .map(service -> new ServiceResponseDTO(
+//                            service.getServiceId(),
+//                            service.getCustomer().getId(),
+//                            service.getSession() != null ? service.getSession().getSessionId() : null
+//                    ))
+//                    .collect(Collectors.toList());
+//
+//            return ResponseEntity.ok(response);
+            List<ServiceResponseDTO> response = serviceService.getServicesBySessionId(sessionId);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,10 +101,10 @@ public class ServiceController {
 
     // POST: Tạo mới service
     @PostMapping
-    public ResponseEntity<ServiceResponseDTO> createService(@RequestBody ServiceDTO dto) {
+    public ResponseEntity<String> createService(@RequestBody ServiceRequest request) {
         try {
-            ServiceResponseDTO response = serviceService.createService(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+           serviceService.createService(request);
+            return new ResponseEntity<>("SERVICE IS CREATED SUCCESSFULLY", org.springframework.http.HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(null);
@@ -103,11 +117,11 @@ public class ServiceController {
     // PUT: Cập nhật service
     @PutMapping("/{id}")
     public ResponseEntity<String> updateService(
-            @PathVariable int id,
-            @RequestBody Service service) {
+            @PathVariable Integer id,
+            @RequestBody UpdateServiceRequest request) {
         try {
-            service.setServiceId(id);
-            serviceService.updateService(service);
+
+            serviceService.updateService(id, request);
             return ResponseEntity.ok("Service updated successfully");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -121,7 +135,7 @@ public class ServiceController {
 
     // DELETE: Xóa service
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteService(@PathVariable int id) {
+    public ResponseEntity<String> deleteService(@PathVariable Integer id) {
         try {
             serviceService.deleteService(id);
             return ResponseEntity.ok("Service deleted successfully");

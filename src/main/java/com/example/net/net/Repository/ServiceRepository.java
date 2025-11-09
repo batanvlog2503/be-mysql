@@ -13,6 +13,7 @@ public interface ServiceRepository extends JpaRepository<Service, Integer> {
     List<ServiceProduct> findByServiceIdWithProduct(@Param("serviceId") Integer serviceId);
 
     List<Service> findByCustomer_Id(Integer customerId);
+//    Dùng query method Spring Data JPA, tự động generate query SELECT * FROM service WHERE customer_id = ?.
 
     List<Service> findBySession_SessionId(Integer sessionId);
 }

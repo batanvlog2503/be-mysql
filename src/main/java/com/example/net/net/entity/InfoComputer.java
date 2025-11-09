@@ -14,7 +14,7 @@ public class InfoComputer {
 
     @Id
     @Column(name = "computer_id", nullable = false)
-    private int computerId;
+    private Integer computerId;
 
     @Column(name = "screen", length = 200, nullable = false)
     private String screen;

@@ -20,7 +20,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer getCustomerById(int id) {
+    public Customer getCustomerById(Integer id) {
        return customerRepository.findById(id).get();
     }
 

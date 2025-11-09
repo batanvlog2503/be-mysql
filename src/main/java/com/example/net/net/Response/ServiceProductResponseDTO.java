@@ -16,7 +16,7 @@ public class ServiceProductResponseDTO {
     private Integer quantity;
     private Integer price;
 
-    private ServiceInfo service; //  thêm phần thông tin service
+
 
     @Getter
     @Setter
@@ -27,4 +27,7 @@ public class ServiceProductResponseDTO {
         private Integer customerId;
         private Integer sessionId;
     }
+    private ServiceInfo service; //
 }
+
+// service, product, quantity

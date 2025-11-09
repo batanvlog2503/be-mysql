@@ -20,7 +20,7 @@ public class ComputerService implements IComputerService{
     }
 
     @Override
-    public Computer getComputerById(int id) {
+    public Computer getComputerById(Integer id) {
         return computerRepository.findById(id).get();
     }
 

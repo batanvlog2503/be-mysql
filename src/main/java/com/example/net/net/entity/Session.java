@@ -19,15 +19,15 @@ public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "session_id")
-    private int sessionId;
+    private Integer sessionId;
 
     @Column(name = "customer_id", nullable = false)
 
-    private int customerId;
+    private Integer customerId;
 
 
     @Column(name = "computer_id", nullable = false)
-    private int computerId;
+    private Integer computerId;
 
     @Column(name = "start_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = true, nullable = false)
     private LocalDateTime startTime;

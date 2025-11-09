@@ -1,8 +1,11 @@
 package com.example.net.net.controller;
 
+import com.example.net.net.Response.ServiceResponseDTO;
+import com.example.net.net.Response.SessionResponseDTO;
 import com.example.net.net.Service.Session.ISessionService;
-import com.example.net.net.dto.SessionRequest;
 import com.example.net.net.entity.Session;
+import com.example.net.net.request.SessionRequest;
+import com.example.net.net.request.UpdateSessionRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,34 +27,69 @@ public class SessionController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public List<Session> getAllSessions(){
-        return sessionService.getAllSessions();
+    public ResponseEntity<List<SessionResponseDTO>> getAllSessionsResponseDTO(){
+        try{
+            List<SessionResponseDTO> response = sessionService.getAllSessionResponseDTO();
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
 
     @GetMapping("/{id}")
-    public Session getSessionById(@PathVariable(name = "id") int id){
-        return sessionService.getSessionById(id);
+    public ResponseEntity<SessionResponseDTO> getSessionResponseById(@PathVariable Integer id) {
+        try {
+             SessionResponseDTO response = sessionService.getSessionResponseById(id);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
-
-    // ✅ QUAN TRỌNG: Phải trả về Session đã được tạo (có sessionId)
+    // create session
     @PostMapping
-    public ResponseEntity<Session> createSession(@RequestBody Session session){
-        Session createdSession = sessionService.createSession(session);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdSession);
+    public ResponseEntity<String> createSession(@RequestBody SessionRequest request    ){
+        try {
+            sessionService.createSession(request);
+            return new ResponseEntity<>("Session IS CREATED SUCCESSFULLY", org.springframework.http.HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
-
+    // update sesion
     @PutMapping("/update/{id}")
-    public ResponseEntity<Session> updateSession(
-            @PathVariable(name = "id") int id,
-            @RequestBody Session session){
-        session.setSessionId(id);
-        Session updatedSession = sessionService.updateSession(session);
-        return ResponseEntity.ok(updatedSession);
+    public ResponseEntity<String> updateSession(
+            @PathVariable(name = "id") Integer id,
+            @RequestBody UpdateSessionRequest request){
+        try {
+            sessionService.updateSession(id, request);
+            return ResponseEntity.ok("Session updated successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteSession(@PathVariable(name = "id") int id){
-//        sessionService.deleteSession(id);
-//        return ResponseEntity.noContent().build();
-//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteSession(@PathVariable Integer id) {
+        try {
+           sessionService.deleteSession(id);
+            return ResponseEntity.ok("Session deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred");
+        }
+    }
+
 }

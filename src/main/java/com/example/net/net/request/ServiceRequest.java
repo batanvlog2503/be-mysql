@@ -1,17 +1,15 @@
-package com.example.net.net.Response;
-import com.example.net.net.entity.Customer;
+package com.example.net.net.request;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServiceResponseDTO {
-    private Integer serviceId;
-    private Customer customer;
+public class ServiceRequest {
+    private Integer customerId;
     private Integer sessionId;
 }

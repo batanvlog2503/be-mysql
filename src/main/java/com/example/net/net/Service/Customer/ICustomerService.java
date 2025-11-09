@@ -9,7 +9,7 @@ public interface ICustomerService  {
 
     List<Customer> getAllCustomers();
 
-    Customer getCustomerById(int id);
+    Customer getCustomerById(Integer id);
 
     void createCustomer(Customer customer);
 
