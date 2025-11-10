@@ -71,18 +71,24 @@ public class SessionService implements ISessionService{
         sessionRepository.save(session);
     }
 
-    @Override
-    @Transactional
-    public void createSession(SessionRequest request){
-        if(request.getCustomerId() == null){
-            throw new IllegalArgumentException("Customer can not be null");
-        }
-        if(request.getComputerId() == null){
-            throw new IllegalArgumentException("Computer cannot be null");
+        @Override
+        @Transactional
+        public Session createSession(SessionRequest request){
+            if(request.getCustomerId() == null){
+                throw new IllegalArgumentException("Customer can not be null");
+            }
+            if(request.getComputerId() == null){
+                throw new IllegalArgumentException("Computer cannot be null");
+
+            }
+            // LƯU VÀO DATABASE VÀ TRẢ VỀ OBJECT ĐÃ CÓ ID
+            Session session = sessionConverter.convertSessionRequestToEntity(request);
+            Session savedSession = sessionRepository.save(session);
+
+            return savedSession; // Trả về session đã có sessionId
+
 
         }
-
-    }
     @Override
     @Transactional
     public void deleteSession(Integer sessionId) {

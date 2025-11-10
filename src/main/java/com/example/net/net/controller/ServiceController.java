@@ -4,6 +4,7 @@ import com.example.net.net.Service.Service.IServiceService;
 import com.example.net.net.dto.ServiceDTO;
 import com.example.net.net.Response.ServiceResponseDTO;
 import com.example.net.net.entity.Service;
+import com.example.net.net.entity.Session;
 import com.example.net.net.request.ServiceRequest;
 import com.example.net.net.request.UpdateServiceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,10 +102,10 @@ public class ServiceController {
 
     // POST: Tạo mới service
     @PostMapping
-    public ResponseEntity<String> createService(@RequestBody ServiceRequest request) {
+    public ResponseEntity<?> createService(@RequestBody ServiceRequest request) {
         try {
-           serviceService.createService(request);
-            return new ResponseEntity<>("SERVICE IS CREATED SUCCESSFULLY", org.springframework.http.HttpStatus.CREATED);
+            Service service = serviceService.createService(request);
+            return new ResponseEntity<>(service, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(null);

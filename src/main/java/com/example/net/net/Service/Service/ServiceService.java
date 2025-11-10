@@ -47,7 +47,7 @@ public class ServiceService implements IServiceService{
 
     @Override
     @Transactional
-    public void createService(ServiceRequest request) {
+    public Service createService(ServiceRequest request) {
         // Validate input
         if (request.getCustomerId() == null) {
             throw new IllegalArgumentException("Customer ID cannot be null");
@@ -60,7 +60,8 @@ public class ServiceService implements IServiceService{
 
 
         // Convert và trả về DTO
-        serviceRepository.save(service);
+        Service savedService = serviceRepository.save(service);
+        return savedService;
     }
 
 //    @Override

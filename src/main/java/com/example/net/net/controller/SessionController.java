@@ -52,10 +52,10 @@ public class SessionController {
     }
     // create session
     @PostMapping
-    public ResponseEntity<String> createSession(@RequestBody SessionRequest request    ){
+    public ResponseEntity<?> createSession(@RequestBody SessionRequest request    ){
         try {
-            sessionService.createSession(request);
-            return new ResponseEntity<>("Session IS CREATED SUCCESSFULLY", org.springframework.http.HttpStatus.CREATED);
+            Session createdSession = sessionService.createSession(request);
+            return new ResponseEntity<>(createdSession, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(null);

@@ -18,7 +18,7 @@ public interface IServiceService {
     List<ServiceResponseDTO> getAllServiceResponseDTO();
     List<ServiceResponseDTO> getServicesBySessionId(Integer sessionId);
     ServiceResponseDTO getServiceResponseById(Integer id);
-    void createService(ServiceRequest request);
+    Service createService(ServiceRequest request);
     void deleteService(Integer id);
     void updateService(Integer serviceId, UpdateServiceRequest request);
 }

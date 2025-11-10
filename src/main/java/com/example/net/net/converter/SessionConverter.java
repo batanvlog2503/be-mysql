@@ -46,17 +46,25 @@ public class SessionConverter {
         return dto;
     }
 
-//    public Session convertSessionRequestToEntity(SessionRequest request){
-//        if(request == null){
-//            return null;
-//        }
-//
-//        Session session = new Session();
-//        if(request.getCustomerId()!=null){
-//            session.setCustomerId(request.getCustomerId());
-//        }
-//
-//    }
+    public Session convertSessionRequestToEntity(SessionRequest request){
+        if(request == null){
+            return null;
+        }
+
+        Session session = new Session();
+        if(request.getCustomerId()!=null){
+            session.setCustomerId(request.getCustomerId());
+        }
+        if(request.getComputerId() != null){
+            session.setComputerId(request.getComputerId());
+        }
+        if(request.getStartTime() != null){
+            session.setStartTime(request.getStartTime());
+        }
+
+        return session;
+
+    }
 }
 
 
