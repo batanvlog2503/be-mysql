@@ -16,8 +16,7 @@ import java.util.List;
 @Setter
 @Getter
 public class UpdateSessionRequest {
-    private Integer customerId;
-    private Integer computerId;
+
     private LocalDateTime endTime;
     private Integer total;
 

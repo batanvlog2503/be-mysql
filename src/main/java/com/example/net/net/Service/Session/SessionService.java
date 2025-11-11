@@ -45,17 +45,12 @@ public class SessionService implements ISessionService{
 
     @Override
     @Transactional
-    public void updateSession(Integer sessionId, UpdateSessionRequest request) {
+    public SessionResponseDTO updateSession(Integer sessionId, UpdateSessionRequest request) {
         Session session = sessionRepository.findById(sessionId).orElseThrow(() -> new RuntimeException("Session not found by id" + sessionId));
 
 
         // Cập nhật các trường từ request
-        if (request.getCustomerId() != null && request.getCustomerId() != 0) {
-            session.setCustomerId(request.getCustomerId());
-        }
-        if (request.getComputerId() != null && request.getComputerId() != 0) {
-            session.setComputerId(request.getComputerId());
-        }
+
         if (request.getEndTime() != null) {
             session.setEndTime(request.getEndTime());
         }
@@ -68,7 +63,8 @@ public class SessionService implements ISessionService{
         //     session.setStartTime(request.getStartTime());
         // }
 
-        sessionRepository.save(session);
+        Session savedSession = sessionRepository.save(session);
+        return sessionConverter.convertSessionToSessionResponseDTO(savedSession);
     }
 
         @Override

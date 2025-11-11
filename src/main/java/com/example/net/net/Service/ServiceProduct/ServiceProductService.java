@@ -59,6 +59,17 @@ public class ServiceProductService implements IServiceProductService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
+    public void deleteServiceProductBySessionIdAndProductId(Integer sessionId, Integer productId) {
+        if(sessionId == null || productId == null){
+            throw new IllegalArgumentException("SessionID or ProductId can be not null");
+        }
+
+        ServiceProduct serviceProduct = serviceProductRepository.findBySessionIdAndProductId(sessionId, productId).orElseThrow(() -> new RuntimeException("Service Product not found" + productId + " and" + sessionId));
+        serviceProductRepository.delete(serviceProduct);
+    }
+
 
     @Override
     public List<ServiceProductResponseDTO> getServiceProductsByServiceId(Integer serviceId) {

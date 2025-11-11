@@ -58,17 +58,6 @@ public class ServiceController {
     public ResponseEntity<List<ServiceResponseDTO>> getServicesByCustomerId(
             @PathVariable Integer customerId) {
         try {
-//            List<Service> services = serviceService.getServicesByCustomerId(customerId);
-//
-//            List<ServiceResponseDTO> response = services.stream()
-//                    .map(service -> new ServiceResponseDTO(
-//                            service.getServiceId(),
-//                            service.getCustomer().getId(),
-//                            service.getSession() != null ? service.getSession().getSessionId() : null
-//                    ))
-//                    .collect(Collectors.toList());
-//
-//            return ResponseEntity.ok(response);
             List<ServiceResponseDTO> response = serviceService.getServicesByCustomerId(customerId);
             return ResponseEntity.ok(response);
         } catch (Exception e) {

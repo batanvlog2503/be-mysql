@@ -136,4 +136,24 @@ public class ServiceProductController {
                     .body("An error occurred");
         }
     }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteServiceProductBySessionIdAndProductId(@RequestParam Integer sessionId, @RequestParam Integer productId){
+        try {
+            serviceProductService.deleteServiceProductBySessionIdAndProductId(sessionId, productId);
+            return ResponseEntity.ok("Delete Successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred");
+        }
+    }
+
+//     const result = await axios.delete(
+//      `http://localhost:8080/api/serviceproducts?sessionId=${sessionId}&productId=${productId}`
+//    )
+
 }

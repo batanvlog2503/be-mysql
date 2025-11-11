@@ -66,12 +66,12 @@ public class SessionController {
     }
     // update sesion
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateSession(
+    public ResponseEntity<?> updateSession(
             @PathVariable(name = "id") Integer id,
             @RequestBody UpdateSessionRequest request){
         try {
-            sessionService.updateSession(id, request);
-            return ResponseEntity.ok("Session updated successfully");
+            SessionResponseDTO updateSession = sessionService.updateSession(id, request);
+            return new ResponseEntity<>(updateSession, HttpStatus.OK);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }

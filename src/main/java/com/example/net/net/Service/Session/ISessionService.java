@@ -10,7 +10,7 @@ import java.util.List;
 public interface ISessionService {
 
     Session createSession(SessionRequest request);
-    void updateSession(Integer sessionId, UpdateSessionRequest request);
+    SessionResponseDTO updateSession(Integer sessionId, UpdateSessionRequest request);
     void deleteSession(Integer sessionId);
 
 

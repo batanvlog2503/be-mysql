@@ -18,6 +18,7 @@ public interface IServiceProductService {
     void updateServiceProduct(Integer id, UpdateServiceProductRequest request);
     List<ServiceProductResponseDTO> getServiceProductsBySessionId(Integer SessionId);
 
+    void deleteServiceProductBySessionIdAndProductId(Integer sessionId, Integer productId);
 
     List<ServiceProductResponseDTO> getServiceProductsByServiceId(Integer serviceId);
 
