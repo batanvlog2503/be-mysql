@@ -13,7 +13,7 @@ public interface ISessionService {
     SessionResponseDTO updateSession(Integer sessionId, UpdateSessionRequest request);
     void deleteSession(Integer sessionId);
 
-
+    List<SessionResponseDTO> getSessionsByCustomerId(Integer customerId);
     List<SessionResponseDTO> getAllSessionResponseDTO();
     SessionResponseDTO getSessionResponseById(Integer sessionId);
 }

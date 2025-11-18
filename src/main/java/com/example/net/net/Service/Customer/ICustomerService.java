@@ -17,7 +17,7 @@ public interface ICustomerService  {
 
     Customer updateCustomer(Integer id, UpdateCustomerRequest request);
 
-
+    List<Customer> getCustomersByUsername(String username);
     void deleteCustomer(Integer id);
     Customer getCustomerByUsername(String username);
 

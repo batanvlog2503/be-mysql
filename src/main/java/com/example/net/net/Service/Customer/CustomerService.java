@@ -47,6 +47,11 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public List<Customer> getCustomersByUsername(String username) {
+        return customerRepository.findByUsernameIsContainingIgnoreCase(username);
+    }
+
+    @Override
     public void deleteCustomer(Integer id) {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer Not found with id: " + id));

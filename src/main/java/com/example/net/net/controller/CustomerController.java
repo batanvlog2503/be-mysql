@@ -36,6 +36,19 @@ public class CustomerController {
         return customerService.getCustomerById(id);
     }
 
+    @GetMapping("/list/{username}")
+    public ResponseEntity<List<Customer>> getCustomersByUsername(@PathVariable String username){
+
+        try {
+            List<Customer> customerList= customerService.getCustomersByUsername(username);
+            return ResponseEntity.ok(customerList);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     @GetMapping("/name/{username}")
     public ResponseEntity<Customer> getCustomerByUsername(@PathVariable String username) {
         try {

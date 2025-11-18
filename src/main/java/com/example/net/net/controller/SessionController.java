@@ -50,6 +50,18 @@ public class SessionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<List<SessionResponseDTO>> getSessionsByCustomerId(@PathVariable Integer customerId){
+        try {
+            List<SessionResponseDTO> response = sessionService.getSessionsByCustomerId(customerId);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     // create session
     @PostMapping
     public ResponseEntity<?> createSession(@RequestBody SessionRequest request    ){

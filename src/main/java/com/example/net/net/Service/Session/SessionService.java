@@ -42,6 +42,12 @@ public class SessionService implements ISessionService{
         return sessionConverter.convertSessionToSessionResponseDTO(session);
     }
 
+    @Override
+    public List<SessionResponseDTO> getSessionsByCustomerId(Integer customerId) {
+        List<Session> sessions = sessionRepository.findByCustomerId(customerId);
+       return sessions.stream().map(sessionConverter::convertSessionToSessionResponseDTO).collect(Collectors.toList());
+    }
+
 
     @Override
     @Transactional
@@ -92,5 +98,7 @@ public class SessionService implements ISessionService{
 
         sessionRepository.delete(session);
     }
+
+
 
 }
