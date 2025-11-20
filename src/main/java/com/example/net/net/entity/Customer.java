@@ -41,8 +41,8 @@ public class Customer {
 
 //    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 //    private List<Session> sessions;
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Invoice> invoices;
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+//    private List<Invoice> invoices;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<AuditLog> auditLogs;
